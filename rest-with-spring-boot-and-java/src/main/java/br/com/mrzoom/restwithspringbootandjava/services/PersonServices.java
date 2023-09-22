@@ -1,12 +1,11 @@
 package br.com.mrzoom.restwithspringbootandjava.services;
 
-import br.com.mrzoom.restwithspringbootandjava.PersonRepository;
+import br.com.mrzoom.restwithspringbootandjava.repository.PersonRepository;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
