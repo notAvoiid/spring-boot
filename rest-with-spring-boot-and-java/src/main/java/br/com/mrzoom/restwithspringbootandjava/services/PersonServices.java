@@ -1,7 +1,7 @@
 package br.com.mrzoom.restwithspringbootandjava.services;
 
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.PersonVO;
-import br.com.mrzoom.restwithspringbootandjava.mapper.DozerMapper;
+import br.com.mrzoom.restwithspringbootandjava.mapper.ModelMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import br.com.mrzoom.restwithspringbootandjava.repository.PersonRepository;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
@@ -21,20 +21,20 @@ public class PersonServices {
 
     public List<PersonVO> findAll() {
         logger.info("Finding all people!");
-        return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+        return ModelMapper.parseListObjects(repository.findAll(), PersonVO.class);
     }
 
     public PersonVO findById(Long id){
         logger.info("Finding one person!");
         Person entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this Id!"));
-        return DozerMapper.parseObject(entity, PersonVO.class);
+        return ModelMapper.parseObject(entity, PersonVO.class);
     }
 
     public PersonVO create(PersonVO person) {
         logger.info("Creating one person!");
 
-        Person entity = DozerMapper.parseObject(person, Person.class);
-        PersonVO vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        Person entity = ModelMapper.parseObject(person, Person.class);
+        PersonVO vo = ModelMapper.parseObject(repository.save(entity), PersonVO.class);
 
         return vo;
     }
@@ -48,7 +48,7 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        PersonVO vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        PersonVO vo = ModelMapper.parseObject(repository.save(entity), PersonVO.class);
         return vo;
     }
 
