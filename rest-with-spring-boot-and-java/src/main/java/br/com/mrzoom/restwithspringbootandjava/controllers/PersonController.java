@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/person/v1")
 public class PersonController {
 
     @Autowired
