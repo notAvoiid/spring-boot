@@ -1,4 +1,4 @@
-package br.com.mrzoom.restwithspringbootandjava;
+package br.com.mrzoom.restwithspringbootandjava.repository;
 
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
