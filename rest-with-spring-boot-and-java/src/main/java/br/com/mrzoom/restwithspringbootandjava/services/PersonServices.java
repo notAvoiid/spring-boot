@@ -1,6 +1,7 @@
 package br.com.mrzoom.restwithspringbootandjava.services;
 
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.PersonVO;
+import br.com.mrzoom.restwithspringbootandjava.data.vo.v2.PersonVOV2;
 import br.com.mrzoom.restwithspringbootandjava.mapper.ModelMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import br.com.mrzoom.restwithspringbootandjava.repository.PersonRepository;
@@ -35,7 +36,14 @@ public class PersonServices {
 
         Person entity = ModelMapper.parseObject(person, Person.class);
         PersonVO vo = ModelMapper.parseObject(repository.save(entity), PersonVO.class);
+        return vo;
+    }
 
+    public PersonVOV2 createV2(PersonVO person) {
+        logger.info("Creating one person!");
+
+        Person entity = ModelMapper.parseObject(person, Person.class);
+        PersonVOV2 vo = ModelMapper.parseObject(repository.save(entity), PersonVOV2.class);
         return vo;
     }
 
