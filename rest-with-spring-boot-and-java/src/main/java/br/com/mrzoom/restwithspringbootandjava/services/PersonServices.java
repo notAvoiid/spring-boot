@@ -3,6 +3,7 @@ package br.com.mrzoom.restwithspringbootandjava.services;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.PersonVO;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v2.PersonVOV2;
 import br.com.mrzoom.restwithspringbootandjava.mapper.ModelMapper;
+import br.com.mrzoom.restwithspringbootandjava.mapper.custom.PersonMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import br.com.mrzoom.restwithspringbootandjava.repository.PersonRepository;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
@@ -19,6 +20,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper mapper;
 
     public List<PersonVO> findAll() {
         logger.info("Finding all people!");
@@ -39,11 +43,11 @@ public class PersonServices {
         return vo;
     }
 
-    public PersonVOV2 createV2(PersonVO person) {
+    public PersonVOV2 createV2(PersonVOV2 person) {
         logger.info("Creating one person!");
 
-        Person entity = ModelMapper.parseObject(person, Person.class);
-        PersonVOV2 vo = ModelMapper.parseObject(repository.save(entity), PersonVOV2.class);
+        Person entity = mapper.convertVOToEntity(person);
+        PersonVOV2 vo = mapper.convertEntityToVO(repository.save(entity));
         return vo;
     }
 
