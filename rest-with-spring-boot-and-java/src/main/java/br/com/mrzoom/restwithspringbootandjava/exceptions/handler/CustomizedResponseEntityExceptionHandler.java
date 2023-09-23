@@ -1,5 +1,8 @@
-package br.com.mrzoom.restwithspringbootandjava.exceptions;
+package br.com.mrzoom.restwithspringbootandjava.exceptions.handler;
 
+import br.com.mrzoom.restwithspringbootandjava.exceptions.ExceptionResponse;
+import br.com.mrzoom.restwithspringbootandjava.exceptions.RequiredObjectIsNullException;
+import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,6 +37,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions
+            (Exception ex, WebRequest request){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
 }

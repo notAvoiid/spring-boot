@@ -3,6 +3,7 @@ package br.com.mrzoom.restwithspringbootandjava.services;
 import br.com.mrzoom.restwithspringbootandjava.controllers.PersonController;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.PersonVO;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v2.PersonVOV2;
+import br.com.mrzoom.restwithspringbootandjava.exceptions.RequiredObjectIsNullException;
 import br.com.mrzoom.restwithspringbootandjava.mapper.ModelMapper;
 import br.com.mrzoom.restwithspringbootandjava.mapper.custom.PersonMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
@@ -48,6 +49,7 @@ public class PersonServices {
     }
 
     public PersonVO create(PersonVO person) {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Creating one person!");
 
         Person entity = ModelMapper.parseObject(person, Person.class);
@@ -66,6 +68,7 @@ public class PersonServices {
     }
 
     public PersonVO update(PersonVO person) {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Updating one person!");
         Person entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this Id!"));
 
