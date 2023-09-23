@@ -1,21 +1,21 @@
 package br.com.mrzoom.restwithspringbootandjava.data.vo.v1;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-@JsonPropertyOrder({"id", "first_name", "last_name", "gender", "address"})
-public class PersonVO implements Serializable {
+@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @JsonProperty("id")
     private Long id;
-
     @JsonProperty("first_name")
     private String firstName;
 
@@ -25,14 +25,6 @@ public class PersonVO implements Serializable {
     private String gender;
 
     public PersonVO(){}
-
-    public PersonVO(Long id, String firstName, String lastName, String address, String gender) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.gender = gender;
-    }
 
     public Long getId() {
         return id;
@@ -78,6 +70,7 @@ public class PersonVO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         PersonVO personVO = (PersonVO) o;
 
@@ -90,7 +83,8 @@ public class PersonVO implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
