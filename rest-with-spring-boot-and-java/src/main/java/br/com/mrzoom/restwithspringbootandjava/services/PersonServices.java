@@ -30,7 +30,7 @@ public class PersonServices {
 
     public List<PersonVO> findAll() {
         logger.info("Finding all people!");
-        var people = ModelMapper.parseListObjects(repository.findAll(), PersonVO.class);
+        List<PersonVO> people = ModelMapper.parseListObjects(repository.findAll(), PersonVO.class);
         people
                 .stream()
                 .forEach(
