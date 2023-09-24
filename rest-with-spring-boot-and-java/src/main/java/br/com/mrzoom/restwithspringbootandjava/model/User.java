@@ -23,7 +23,7 @@ public class User implements UserDetails, Serializable {
     private Long id;
 
     @Column(name = "user_name", unique = true)
-    private String username;
+    private String userName;
 
     @Column(name = "full_name")
     private String fullName;
@@ -71,7 +71,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.userName;
     }
 
     @Override
@@ -102,8 +102,12 @@ public class User implements UserDetails, Serializable {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFullName() {
@@ -166,7 +170,7 @@ public class User implements UserDetails, Serializable {
         User user = (User) o;
 
         if (!Objects.equals(id, user.id)) return false;
-        if (!Objects.equals(username, user.username)) return false;
+        if (!Objects.equals(userName, user.userName)) return false;
         if (!Objects.equals(fullName, user.fullName)) return false;
         if (!Objects.equals(password, user.password)) return false;
         if (!Objects.equals(accountNonExpired, user.accountNonExpired))
@@ -182,7 +186,7 @@ public class User implements UserDetails, Serializable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (accountNonExpired != null ? accountNonExpired.hashCode() : 0);
