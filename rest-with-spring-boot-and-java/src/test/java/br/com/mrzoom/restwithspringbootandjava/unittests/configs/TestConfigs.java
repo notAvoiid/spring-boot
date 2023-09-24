@@ -6,6 +6,8 @@ public class TestConfigs {
 
     public static final String HEADER_PARAM_ORIGIN = "Origin";
     public static final String HEADER_AVOID = "https://github.com/notAvoiid";
+    public static final String HEADER_INCORRECT = "www.google.com";
+
     public static final String HEADER_PARAM_AUTHORIZATION = "Authorization";
 
     public static final String CONTENT_TYPE_JSON = "application/json";
