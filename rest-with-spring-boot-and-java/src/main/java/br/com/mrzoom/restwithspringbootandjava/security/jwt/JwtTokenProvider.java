@@ -2,10 +2,6 @@ package br.com.mrzoom.restwithspringbootandjava.security.jwt;
 
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.security.TokenVO;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.InvalidJwtAuthenticationException;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -27,15 +28,11 @@ public class JwtTokenProvider {
     @Value("${security.jwt.token.secret-key:secret}")
     private String secretKey = "secret";
 
-    @Value("${security.jwt.token.expire-length:secret}")
-    private long validInMilliSeconds = 3600000;
+    @Value("${security.jwt.token.expire-length:3600000}")
+    private long validityInMilliseconds = 3600000;
 
     @Autowired
-    private final UserDetailsService userDetailsService;
-
-    public JwtTokenProvider(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    private UserDetailsService userDetailsService;
 
     Algorithm algorithm = null;
 
@@ -48,7 +45,7 @@ public class JwtTokenProvider {
 
     public TokenVO createAccessToken(String username, List<String> roles){
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validInMilliSeconds);
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
         String accessToken = getAccessToken(username, roles, now, validity);
         String refreshToken = getRefreshToken(username, roles, now);
         return new TokenVO(username, true, now, validity, accessToken, refreshToken);
@@ -67,7 +64,7 @@ public class JwtTokenProvider {
 
     }
     private String getRefreshToken(String username, List<String> roles, Date now) {
-        Date validityRefreshToken = new Date(now.getTime() + (validInMilliSeconds * 3));
+        Date validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
         return JWT.create()
                 .withClaim("roles", roles)
                 .withIssuedAt(now)
