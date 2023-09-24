@@ -1,4 +1,4 @@
-package br.com.mrzoom.restwithspringbootandjava.securityJwt;
+package br.com.mrzoom.restwithspringbootandjava.security.jwt;
 
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.security.TokenVO;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.InvalidJwtAuthenticationException;
@@ -31,9 +31,14 @@ public class JwtTokenProvider {
     private long validInMilliSeconds = 3600000;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public JwtTokenProvider(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     Algorithm algorithm = null;
+
 
     @PostConstruct
     protected void init(){
