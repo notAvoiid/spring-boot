@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class AbstractIntegrationTest {
 
 
-    public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.34");
 
