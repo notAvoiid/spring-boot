@@ -1,6 +1,7 @@
+cors:
+  originPatters: http://localhost:8080,https://github.com/notAvoiid,http://localhost:3000
 server:
   port: 8888
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
