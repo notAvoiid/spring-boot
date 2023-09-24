@@ -40,7 +40,7 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 		mockPerson();
 
 		specification = new RequestSpecBuilder()
-				.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.HEADER_PARAM_AVOID)
+				.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.HEADER_AVOID)
 				.setBasePath("/api/person/v1")
 				.setPort(TestConfigs.SERVER_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL))
