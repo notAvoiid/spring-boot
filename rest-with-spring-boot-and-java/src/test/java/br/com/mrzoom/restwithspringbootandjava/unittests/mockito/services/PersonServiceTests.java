@@ -64,12 +64,13 @@ public class PersonServiceTests {
         Person entity = input.mockEntity(1);
         entity.setId(1L);
 
-        entity.setId(1L);
+        Person persisted = entity;
+        persisted.setId(1L);
 
         PersonVO vo = input.mockVO(1);
         vo.setId(1L);
 
-        when(repository.save(entity)).thenReturn(entity);
+        when(repository.save(entity)).thenReturn(persisted);
 
         var result = service.create(vo);
 
