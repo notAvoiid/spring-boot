@@ -26,22 +26,18 @@ public class AbstractIntegrationTest {
         private static Map<String, String> createConnectionConfiguration() {
 
             return Map.of(
-              "spring.datasource.url", mysql.getJdbcUrl(),
-              "spring.datasource.username", mysql.getUsername(),
-              "spring.datasource.password", mysql.getPassword()
+                    "spring.datasource.url", mysql.getJdbcUrl(),
+                    "spring.datasource.username", mysql.getUsername(),
+                    "spring.datasource.password", mysql.getPassword()
             );
-
         }
 
+        @SuppressWarnings({"unchecked", "rawtypes"})
         @Override
-        @SuppressWarnings({"uncheck", "rawtypes"})
         public void initialize(ConfigurableApplicationContext applicationContext) {
             startContainers();
-
             ConfigurableEnvironment environment = applicationContext.getEnvironment();
-
             MapPropertySource testcontainers = new MapPropertySource("testcontainers", (Map) createConnectionConfiguration());
-
             environment.getPropertySources().addFirst(testcontainers);
         }
     }

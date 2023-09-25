@@ -3,7 +3,7 @@ package br.com.mrzoom.restwithspringbootandjava.integrationtests.swagger;
 import static org.junit.jupiter.api.Assertions.*;
 import static io.restassured.RestAssured.given;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.testcontainers.AbstractIntegrationTest;
-import br.com.mrzoom.restwithspringbootandjava.unittests.configs.TestConfigs;
+import br.com.mrzoom.restwithspringbootandjava.configs.TestConfigs;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

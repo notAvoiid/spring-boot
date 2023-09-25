@@ -3,7 +3,7 @@ package br.com.mrzoom.restwithspringbootandjava.integrationtests.controllers.wit
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.AccountCredentialsVO;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.TokenVO;
-import br.com.mrzoom.restwithspringbootandjava.unittests.configs.TestConfigs;
+import br.com.mrzoom.restwithspringbootandjava.configs.TestConfigs;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.jupiter.api.MethodOrderer;

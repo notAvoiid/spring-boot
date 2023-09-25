@@ -4,7 +4,7 @@ import br.com.mrzoom.restwithspringbootandjava.integrationtests.testcontainers.A
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.AccountCredentialsVO;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.PersonVO;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.TokenVO;
-import br.com.mrzoom.restwithspringbootandjava.unittests.configs.TestConfigs;
+import br.com.mrzoom.restwithspringbootandjava.configs.TestConfigs;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
