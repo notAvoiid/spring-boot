@@ -239,6 +239,25 @@ class PersonControllerCorsTest extends AbstractIntegrationTest {
 		assertEquals("Male", foundPersonSix.getGender());
 	}
 
+	@Test
+	@Order(6)
+	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
+
+		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
+				.setBasePath("/api/person/v1")
+				.setPort(TestConfigs.SERVER_PORT)
+				.addFilter(new RequestLoggingFilter(LogDetail.ALL))
+				.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+				.build();
+
+		given().spec(specificationWithoutToken)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.when()
+				.get()
+				.then()
+				.statusCode(403);
+	}
+
 	private void mockPerson() {
 		person.setFirstName("Richard");
 		person.setLastName("Stallman");
