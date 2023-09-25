@@ -175,6 +175,19 @@ class PersonControllerCorsTest extends AbstractIntegrationTest {
 		assertEquals("New York City, New York, US", persistedPerson.getAddress());
 		assertEquals("Male", persistedPerson.getGender());
 	}
+	@Test
+	@Order(4)
+	public void testDelete() throws JsonMappingException, JsonProcessingException {
+
+		given()
+				.spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.pathParam("id", person.getId())
+				.when()
+				.delete("{id}")
+				.then()
+				.statusCode(204);
+	}
 
 	private void mockPerson() {
 		person.setFirstName("Richard");
