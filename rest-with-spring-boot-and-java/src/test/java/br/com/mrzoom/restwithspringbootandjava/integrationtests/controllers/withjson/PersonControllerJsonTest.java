@@ -71,7 +71,7 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 
 	@Test
 	@Order(1)
-	public void testCreate() throws JsonProcessingException {
+	public void testCreate() throws JsonMappingException, JsonProcessingException {
 		mockPerson();
 
 		var content = given()
