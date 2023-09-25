@@ -9,6 +9,7 @@ import br.com.mrzoom.restwithspringbootandjava.mapper.custom.PersonMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import br.com.mrzoom.restwithspringbootandjava.repository.PersonRepository;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -79,6 +80,17 @@ public class PersonServices {
 
         PersonVO vo = ModelMapper.parseObject(repository.save(entity), PersonVO.class);
         vo.add(linkTo(methodOn(PersonController.class).findById(vo.getId())).withSelfRel());
+        return vo;
+    }
+
+    @Transactional
+    public PersonVO disablePerson(Long id){
+        logger.info("Disabling one person!");
+        repository.disablePerson(id);
+        Person entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        PersonVO vo = ModelMapper.parseObject(entity, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
         return vo;
     }
 
