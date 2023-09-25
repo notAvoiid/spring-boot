@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AuthControllerTest extends AbstractIntegrationTest {
+public class AuthControllerJsonTest extends AbstractIntegrationTest {
 
     private static TokenVO tokenVO;
 
