@@ -64,12 +64,13 @@ public class BookServiceTests {
         Book entity = input.mockEntity(1);
         entity.setId(1L);
 
-        entity.setId(1L);
+        Book persisted = entity;
+        persisted.setId(1L);
 
         BookVO vo = input.mockVO(1);
         vo.setId(1L);
 
-        when(repository.save(entity)).thenReturn(entity);
+        when(repository.save(entity)).thenReturn(persisted);
 
         var result = service.create(vo);
 
