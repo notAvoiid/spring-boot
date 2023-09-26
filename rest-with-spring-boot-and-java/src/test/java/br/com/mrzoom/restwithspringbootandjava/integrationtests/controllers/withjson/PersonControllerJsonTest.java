@@ -7,7 +7,6 @@ import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.TokenVO;
 import br.com.mrzoom.restwithspringbootandjava.configs.TestConfigs;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.wrappers.WrapperPersonVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -234,6 +233,7 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.queryParams("page", 3, "size", 10, "direction", "asc")
 				.when()
 				.get()
 				.then()
@@ -255,11 +255,11 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 
 		assertTrue(foundPersonOne.getEnabled());
 
-		assertEquals(1, foundPersonOne.getId());
+		assertEquals(313, foundPersonOne.getId());
 
-		assertEquals("Ayrton", foundPersonOne.getFirstName());
-		assertEquals("Senna", foundPersonOne.getLastName());
-		assertEquals("São Paulo", foundPersonOne.getAddress());
+		assertEquals("Aloin", foundPersonOne.getFirstName());
+		assertEquals("Lowdwell", foundPersonOne.getLastName());
+		assertEquals("71 Garrison Point", foundPersonOne.getAddress());
 		assertEquals("Male", foundPersonOne.getGender());
 
 		PersonVO foundPersonSix = people.get(5);
@@ -272,12 +272,12 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 
 		assertTrue(foundPersonSix.getEnabled());
 
-		assertEquals(9, foundPersonSix.getId());
+		assertEquals(712, foundPersonSix.getId());
 
-		assertEquals("Nelson", foundPersonSix.getFirstName());
-		assertEquals("Mvezo", foundPersonSix.getLastName());
-		assertEquals("Mvezo – South Africa", foundPersonSix.getAddress());
-		assertEquals("Male", foundPersonSix.getGender());
+		assertEquals("Amberly", foundPersonSix.getFirstName());
+		assertEquals("Duffil", foundPersonSix.getLastName());
+		assertEquals("70183 Butterfield Street", foundPersonSix.getAddress());
+		assertEquals("Female", foundPersonSix.getGender());
 	}
 
 	@Test
