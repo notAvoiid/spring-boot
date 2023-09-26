@@ -6,6 +6,7 @@ import br.com.mrzoom.restwithspringbootandjava.integrationtests.controllers.with
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.AccountCredentialsVO;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.PersonVO;
+import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.wrappers.WrapperPersonVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.restassured.builder.RequestSpecBuilder;
@@ -280,7 +281,7 @@ class PersonControllerYamlTest extends AbstractIntegrationTest {
 	@Order(6)
 	public void testFindAll() throws JsonMappingException, JsonProcessingException {
 
-		var content = given().spec(specification)
+		var wrapper = given().spec(specification)
 				.config(
 						RestAssuredConfig
 								.config()
@@ -296,9 +297,9 @@ class PersonControllerYamlTest extends AbstractIntegrationTest {
 				.statusCode(200)
 				.extract()
 				.body()
-				.as(PersonVO[].class, objectMapper);
+				.as(WrapperPersonVO.class, objectMapper);
 
-		List<PersonVO> people = Arrays.asList(content);
+		List<PersonVO> people = wrapper.getEmbedded().getPeople();
 
 		PersonVO foundPersonOne = people.get(0);
 

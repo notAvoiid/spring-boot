@@ -5,6 +5,7 @@ import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.AccountCreden
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.PersonVO;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.TokenVO;
 import br.com.mrzoom.restwithspringbootandjava.configs.TestConfigs;
+import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.wrappers.WrapperPersonVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -241,7 +242,8 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 				.body()
 				.asString();
 
-		List<PersonVO> people = objectMapper.readValue(content, new TypeReference<List<PersonVO>>() {});
+		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
+		List<PersonVO> people = wrapper.getEmbedded().getPeople();
 
 		PersonVO foundPersonOne = people.get(0);
 
