@@ -2,17 +2,20 @@ package br.com.mrzoom.restwithspringbootandjava.services;
 
 import br.com.mrzoom.restwithspringbootandjava.controllers.BookController;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.BookVO;
-import br.com.mrzoom.restwithspringbootandjava.data.vo.v2.PersonVOV2;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.RequiredObjectIsNullException;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
 import br.com.mrzoom.restwithspringbootandjava.mapper.ModelMapper;
-import br.com.mrzoom.restwithspringbootandjava.mapper.custom.PersonMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Book;
 import br.com.mrzoom.restwithspringbootandjava.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -27,17 +30,21 @@ public class BookServices {
     BookRepository repository;
 
     @Autowired
-    PersonMapper mapper;
+    PagedResourcesAssembler<BookVO> assembler;
 
-    public List<BookVO> findAll() {
+    public PagedModel<EntityModel<BookVO>> findAll(Pageable pageable) {
         logger.info("Finding all books!");
-        var books = ModelMapper.parseListObjects(repository.findAll(), BookVO.class);
-        books
-                .stream()
-                .forEach(
-                        p -> p.add(linkTo(methodOn(BookController.class).findById(p.getId())).withSelfRel())
-                );
-        return books;
+        Page<Book> bookPage = repository.findAll(pageable);
+        Page<BookVO> bookVosPage = bookPage.map(p -> ModelMapper.parseObject(p, BookVO.class));
+        bookVosPage.map(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getId())).withSelfRel()));
+
+        Link link = linkTo(methodOn(BookController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "asc"))
+                .withSelfRel();
+
+        return assembler.toModel(bookVosPage, link);
     }
 
     public BookVO findById(Long id){
