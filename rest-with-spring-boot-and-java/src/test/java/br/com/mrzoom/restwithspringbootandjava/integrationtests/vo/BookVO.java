@@ -10,61 +10,59 @@ import java.util.Objects;
 @XmlRootElement(name = "BookVO")
 public class BookVO implements Serializable {
 
-        @Serial
-        private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-        private Long id;
-        private String author;
-        private Date launchDate;
-        private Double price;
-        private String title;
+    private Long id;
+    private String author;
+    private Date launchDate;
+    private Double price;
+    private String title;
 
-	public BookVO() {
-        }
+    public BookVO() {}
 
-        public Long getId() {
-            return id;
-        }
+    public Long getId() {
+        return id;
+    }
 
-        public void setId(Long id) {
-            this.id = id;
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        public String getAuthor() {
-            return author;
-        }
+    public String getAuthor() {
+        return author;
+    }
 
-        public void setAuthor(String author) {
-            this.author = author;
-        }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-        public Date getLaunchDate() {
-            return launchDate;
-        }
+    public Date getLaunchDate() {
+        return launchDate;
+    }
 
-        public void setLaunchDate(Date launchDate) {
-            this.launchDate = launchDate;
-        }
+    public void setLaunchDate(Date launchDate) {
+        this.launchDate = launchDate;
+    }
 
-        public Double getPrice() {
-            return price;
-        }
+    public Double getPrice() {
+        return price;
+    }
 
-        public void setPrice(Double price) {
-            this.price = price;
-        }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-        public String getTitle() {
-            return title;
-        }
+    public String getTitle() {
+        return title;
+    }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    public boolean equals(Object o) {if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         BookVO bookVO = (BookVO) o;
@@ -78,8 +76,7 @@ public class BookVO implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (author != null ? author.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (launchDate != null ? launchDate.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);

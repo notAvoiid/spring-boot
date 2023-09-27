@@ -4,9 +4,9 @@ import br.com.mrzoom.restwithspringbootandjava.configs.TestConfigs;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.AccountCredentialsVO;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.TokenVO;
+import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.wrappers.WrapperBookVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import br.com.mrzoom.restwithspringbootandjava.integrationtests.vo.BookVO;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +42,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(1)
+    @Order(0)
     public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO();
         user.setUsername("igor");
@@ -74,7 +74,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(2)
+    @Order(1)
     public void testCreate() throws JsonMappingException, JsonProcessingException {
 
         mockBook();
@@ -103,7 +103,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     public void testUpdate() throws JsonMappingException, JsonProcessingException {
 
         book.setTitle("Docker Deep Dive - Updated");
@@ -132,7 +132,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(3)
     public void testFindById() throws JsonMappingException, JsonProcessingException {
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
@@ -158,7 +158,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(4)
     public void testDelete() {
         given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
@@ -170,12 +170,12 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(6)
+    @Order(5)
     public void testFindAll() throws JsonMappingException, JsonProcessingException {
 
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                .queryParams("page", 0 , "limit", 5, "direction", "asc")
+                .queryParams("page", 0 , "limit", 12, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -184,7 +184,9 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
                 .body()
                 .asString();
 
-        List<BookVO> books = objectMapper.readValue(content, new TypeReference<List<BookVO>>() {});
+
+        WrapperBookVO wrapper = objectMapper.readValue(content, WrapperBookVO.class);
+        List<BookVO> books = wrapper.getEmbedded().getBooks();
 
         BookVO foundBookOne = books.get(0);
 
@@ -193,9 +195,9 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
         assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals("Implantando a governança de TI", foundBookOne.getTitle());
+        assertEquals("Aguinaldo Aragon Fernandes e Vladimir Ferraz de Abreu", foundBookOne.getAuthor());
+        assertEquals(54.00, foundBookOne.getPrice());
 
         BookVO foundBookFive = books.get(4);
 
@@ -204,9 +206,9 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
         assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals("Head First Design Patterns", foundBookFive.getTitle());
+        assertEquals("Eric Freeman, Elisabeth Freeman, Kathy Sierra, Bert Bates", foundBookFive.getAuthor());
+        assertEquals(110.0, foundBookFive.getPrice());
     }
 
     private void mockBook() {
