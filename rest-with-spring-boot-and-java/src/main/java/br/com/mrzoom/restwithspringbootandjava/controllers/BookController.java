@@ -57,7 +57,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
-    @Operation(summary = "Finds a book!", description = "Finds a book!",
+    @Operation(operationId = "id",summary = "Finds a book!", description = "Finds a book!",
             tags = {"Book"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",

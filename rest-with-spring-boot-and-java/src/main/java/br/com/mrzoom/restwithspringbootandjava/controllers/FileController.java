@@ -2,6 +2,7 @@ package br.com.mrzoom.restwithspringbootandjava.controllers;
 
 import br.com.mrzoom.restwithspringbootandjava.data.vo.UploadFileResponseVO;
 import br.com.mrzoom.restwithspringbootandjava.services.FileStorageService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Tag(name = "File Endpoint")
+@Tag(name = "File Endpoint", description = "Endpoint for managing upload/files.")
 @RestController
 @RequestMapping("/api/file/v1")
 public class FileController {
@@ -28,6 +29,7 @@ public class FileController {
     @Autowired
     private FileStorageService service;
 
+    @Operation(summary = "Upload a file!")
     @PostMapping("/uploadFile")
     public UploadFileResponseVO uploadFile(@RequestParam("file") MultipartFile file) {
         logger.info("Storing file to disk!");
@@ -45,6 +47,7 @@ public class FileController {
                 file.getSize());
     }
 
+    @Operation(summary = "Upload multiple files!")
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponseVO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         logger.info("Storing files to disk!");
@@ -55,6 +58,7 @@ public class FileController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Download a file!")
     @GetMapping("/downloadFile/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) {
         logger.info("Reading a file on disk!");

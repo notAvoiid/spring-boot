@@ -87,7 +87,7 @@ public class PersonController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
-    @Operation(summary = "Finds a person!", description = "Finds a person!",
+    @Operation(operationId = "id", summary = "Finds a person!", description = "Finds a person!",
             tags = {"People"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -159,7 +159,7 @@ public class PersonController {
     }
 
     @PatchMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
-    @Operation(summary = "Disable a specific person by your ID!", description = "Disable a specific person by your ID!",
+    @Operation(operationId = "id", summary = "Disable a specific person by your ID!", description = "Disable a specific person by your ID!",
             tags = {"People"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -175,7 +175,7 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @Operation(summary = "Deletes a person!",
+    @Operation(operationId = "id", summary = "Deletes a person!",
             description = "Deletes a Person by passing in a JSON, XML or YML representation of the person!",
             tags = {"People"},
             responses = {
