@@ -29,8 +29,8 @@ jobs:
       run: pwd mvn clean package
 
     - name: Docker Compose Build
-      working-directory: ./project-with-spring-boot/rest-with-spring-boot-and-java
-      run: docker compose build
+      working-directory: ./rest-with-spring-boot-and-java
+      run: pwd docker compose build
       
     - name: Push to Docker Hub Container Registry
       run: |
