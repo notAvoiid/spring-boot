@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:8080,https://github.com/notAvoiid,http://localhost:3000
 file:
-  upload-dir: /home/runner/work/project-with-spring-boot/UploadDir
+  upload-dir: /home/runner/work/project-with-spring-boot/rest-with-spring-boot-and-java/UploadDir
 security:
   jwt:
     token:
