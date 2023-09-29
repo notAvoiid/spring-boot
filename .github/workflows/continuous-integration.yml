@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Login to Docker Hub
-      uses: docker/login-action@v3.0.0
+      uses: docker/login-action@v2.0.0
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -25,8 +25,10 @@ jobs:
         cache: maven
 
     - name: Build Application JAR
-      working-directory: ./project-with-spring-boot/project-with-spring-boot
-      run: mvn clean package
+      working-directory: ./project-with-spring-boot/rest-with-spring-boot-and-java
+      run: 
+        - pwd
+        - mvn clean package
 
     - name: Docker Compose Build
       working-directory: ./project-with-spring-boot
