@@ -4,16 +4,13 @@ import br.com.mrzoom.restwithspringbootandjava.controllers.PersonController;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v1.PersonVO;
 import br.com.mrzoom.restwithspringbootandjava.data.vo.v2.PersonVOV2;
 import br.com.mrzoom.restwithspringbootandjava.exceptions.RequiredObjectIsNullException;
+import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
 import br.com.mrzoom.restwithspringbootandjava.mapper.ModelMapper;
 import br.com.mrzoom.restwithspringbootandjava.mapper.custom.PersonMapper;
 import br.com.mrzoom.restwithspringbootandjava.model.Person;
 import br.com.mrzoom.restwithspringbootandjava.repository.PersonRepository;
-import br.com.mrzoom.restwithspringbootandjava.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -22,8 +19,10 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.logging.Logger;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServices {
