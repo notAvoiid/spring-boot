@@ -26,9 +26,7 @@ jobs:
 
     - name: Build Application JAR
       working-directory: ./project-with-spring-boot/rest-with-spring-boot-and-java
-      run: 
-        - pwd
-        - mvn clean package
+      run: pwd mvn clean package
 
     - name: Docker Compose Build
       working-directory: ./project-with-spring-boot
