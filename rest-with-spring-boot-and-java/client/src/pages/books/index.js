@@ -2,16 +2,16 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { FiPower, FiEdit, FiTrash2 } from 'react-icons/fi';
 
-import bookImage from '../../assets/user.png'
+import logoImage from '../../assets/user.png'
 import './styles.css';
 
-export default function Book(){
+export default function Books(){
   return (
     <div className="book-container">
       <header>
-        <img src={bookImage} alt="bookImage"/>
+        <img src={logoImage} alt="User logo"/>
         <span>Welcome, <strong>Igor</strong>!</span>
-        <Link className="button" to="book/new">Add new Book</Link>
+        <Link className="button" to="/book/new">Add new Book</Link>
         <button type="button">
           <FiPower size={18} color="#251FC5" />
         </button>
