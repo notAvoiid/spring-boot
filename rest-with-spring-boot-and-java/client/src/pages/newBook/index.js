@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { FiArrowLeft } from "react-icons/fi";
 
@@ -20,6 +20,34 @@ export default function NewBook(){
 
   const username = localStorage.getItem('username');
   const accessToken = localStorage.getItem('accessToken');
+
+  async function loadBook(){
+    try {
+      const response = await api.get(`api/book/v1/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      let adjustedDate = response.data.launchDate.split("T", 10)[0];
+
+      setId(response.data.id);
+      setTitle(response.data.title);
+      setAuthor(response.data.author);
+      setLaunchDate(adjustedDate);
+      setPrice(response.data.price);
+
+    } catch (err) {
+      alert('Error recovering Book! Try again!')
+      navigate('/books')
+    }
+
+  }
+
+  useEffect(() => {
+    if (bookId === '0') return;
+    else loadBook();
+  }, [bookId])
 
   const navigate = useNavigate();
 
