@@ -51,7 +51,7 @@ export default function NewBook(){
 
   const navigate = useNavigate();
 
-  async function createNewBook(e) {
+  async function saveOrUpdate(e) {
     e.preventDefault();
 
     const data = {
@@ -62,11 +62,21 @@ export default function NewBook(){
     };
 
     try {
-      await api.post('api/book/v1', data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
+
+      if (bookId === '0'){
+        await api.post('api/book/v1', data, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+      } else {
+        data.id = id;
+        await api.put('api/book/v1', data, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+      }
       navigate('/books');
     } catch {
       alert('Error while recording Book! Try again!')
@@ -78,14 +88,14 @@ export default function NewBook(){
       <div className="content">
         <section className="form">
           <img src={logoImage} alt="Erudio"/>
-          <h1>Add New Book</h1>
-          <p>Enter the book information and click on Add!</p>
+          <h1>{bookId === '0' ? 'Add' : 'Update'} New Book</h1>
+          <p>Enter the book information and click on {bookId === '0' ? "'Add'" : "'Update'"}!</p>
           <Link className="back-link" to="/books">
             <FiArrowLeft size={16} color="#251fc5"/>
               Home
           </Link>
         </section>
-        <form onSubmit={createNewBook}>
+        <form onSubmit={saveOrUpdate}>
           <input
             placeholder="Title"
             value={title}
@@ -107,7 +117,7 @@ export default function NewBook(){
             onChange={e => setPrice(e.target.value)}
           />
 
-          <button className="button" type="submit">Add</button>
+          <button className="button" type="submit">{bookId === '0' ? 'Add' : 'Update'}</button>
         </form>
       </div>
     </div>
