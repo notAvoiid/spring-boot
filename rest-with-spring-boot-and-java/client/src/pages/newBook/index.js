@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { FiArrowLeft } from "react-icons/fi";
 
 import api from '../../services/api';
@@ -15,6 +15,8 @@ export default function NewBook(){
   const [title, setTitle] = useState('');
   const [launchDate, setLaunchDate] = useState('');
   const [price, setPrice] = useState('');
+
+  const { bookId } = useParams();
 
   const username = localStorage.getItem('username');
   const accessToken = localStorage.getItem('accessToken');
