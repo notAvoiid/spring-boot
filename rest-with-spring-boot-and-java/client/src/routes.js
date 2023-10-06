@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Login from './pages/login'
-import Books from './pages/books'
-import NewBook from "./pages/newBook";
+import Login from './pages/Login/index'
+import Books from './pages/Books'
+import NewBook from "./pages/NewBook";
 
 export default function AppRoutes() {
 

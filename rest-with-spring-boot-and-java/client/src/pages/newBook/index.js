@@ -1,30 +1,82 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from 'react-router-dom';
 import { FiArrowLeft } from "react-icons/fi";
+
+import api from '../../services/api';
 
 import './styles.css';
 
 import logoImage from '../../assets/user.png';
 
-export default function NewBook() {
-  return(
+export default function NewBook(){
+
+  const [id, setId] = useState(null);
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
+  const [launchDate, setLaunchDate] = useState('');
+  const [price, setPrice] = useState('');
+
+  const username = localStorage.getItem('username');
+  const accessToken = localStorage.getItem('accessToken');
+
+  const navigate = useNavigate();
+
+  async function createNewBook(e) {
+    e.preventDefault();
+
+    const data = {
+      author,
+      title,
+      launchDate,
+      price,
+    };
+
+    try {
+      await api.post('api/book/v1', data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+      navigate('/books');
+    } catch {
+      alert('Error while recording Book! Try again!')
+    }
+  }
+
+  return (
     <div className="new-book-container">
       <div className="content">
         <section className="form">
-          <img src={logoImage} alt="User logo"/>
-          <h1>Add new Book</h1>
-          <p>Enter the Book information and click on 'Add'!</p>
+          <img src={logoImage} alt="Erudio"/>
+          <h1>Add New Book</h1>
+          <p>Enter the book information and click on Add!</p>
           <Link className="back-link" to="/books">
-            <FiArrowLeft size={16} color="#251FC5" />
-            Home
+            <FiArrowLeft size={16} color="#251fc5"/>
+              Home
           </Link>
         </section>
-        <form>
-          <input placeholder="Title" />
-          <input placeholder="Author" />
-          <input type="date" />
-          <input placeholder="Price" />
-          
+        <form onSubmit={createNewBook}>
+          <input
+            placeholder="Title"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
+          <input
+            placeholder="Author"
+            value={author}
+            onChange={e => setAuthor(e.target.value)}
+          />
+          <input
+            type="date"
+            value={launchDate}
+            onChange={e => setLaunchDate(e.target.value)}
+          />
+          <input
+            placeholder="Price"
+            value={price}
+            onChange={e => setPrice(e.target.value)}
+          />
+
           <button className="button" type="submit">Add</button>
         </form>
       </div>
