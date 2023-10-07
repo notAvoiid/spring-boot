@@ -10,6 +10,7 @@ import './styles.css';
 export default function Books(){
 
   const [books, setBooks] = useState([]);
+  const [page, setPage] = useState(0);
 
   const username = localStorage.getItem('username');
   const accessToken = localStorage.getItem('accessToken');
@@ -42,20 +43,26 @@ export default function Books(){
     }
   }
 
-  useEffect(() => {
-    api.get('api/book/v1', {
+  async function fetchMoreBooks() {
+    const response = await api.get('api/book/v1', {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
       params: {
-        page: 1,
-        limit: 4,
-        direction: 'asc',
+        page: page,
+        size: 4,
+        direction: 'asc'
       }
-    }).then(response => {
-      setBooks(response.data._embedded.bookVOList)
-    })
-  })
+    });
+
+    setBooks([...books,...response.data._embedded.bookVOList]);
+    setPage(page + 1);
+
+  } 
+
+  useEffect(() => {
+    fetchMoreBooks();
+  }, [])
 
   return (
     <div className="book-container">
@@ -92,7 +99,7 @@ export default function Books(){
           </li>
         ))}
       </ul>
-
+      <button className="button" onClick={fetchMoreBooks} type="button">Load More</button>
     </div>
   )
 }
