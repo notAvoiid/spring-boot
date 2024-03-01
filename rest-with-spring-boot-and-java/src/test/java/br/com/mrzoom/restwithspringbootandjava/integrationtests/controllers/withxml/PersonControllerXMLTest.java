@@ -391,4 +391,5 @@ class PersonControllerXMLTest extends AbstractIntegrationTest {
 		person.setGender("Male");
 		person.setEnabled(true);
 	}
+
 }
